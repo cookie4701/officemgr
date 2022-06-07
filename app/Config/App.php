@@ -23,7 +23,13 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'http://localhost:8080/';
+     public $baseURL = '';
+
+     $burl = getenv('BASE_URL');
+     if (isset($burl) && $burl != '' ) {
+       $baseURL = $burl;
+     }
+
 
     /**
      * --------------------------------------------------------------------------
