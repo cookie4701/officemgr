@@ -21,7 +21,7 @@ CI_ENVIRONMENT = development
 # APP
 #--------------------------------------------------------------------
 
-app.baseURL = ''
+app.baseURL = 'ENV_BASEURL'
 # app.forceGlobalSecureRequests = false
 app.index_page = ''
 
