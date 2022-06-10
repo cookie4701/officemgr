@@ -25,8 +25,8 @@ class AddPostregister extends Migration
             'constraint' => 5
           ],
           'post_date' => [
-            'type' => 'DATE',
-            'default' => 'CURRENT_TIMESTAMP'
+            'type' => 'DATETIME',
+            'default' => new RawSql('CURRENT_TIMESTAMP')
           ],
           'area' => [
             'type' => 'VARCHAR',
