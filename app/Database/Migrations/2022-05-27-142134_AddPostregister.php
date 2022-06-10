@@ -4,6 +4,8 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
+use CodeIgniter\Database\RawSql;
+
 class AddPostregister extends Migration
 {
     public function up()
