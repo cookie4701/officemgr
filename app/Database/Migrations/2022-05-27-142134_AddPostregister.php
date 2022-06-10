@@ -40,7 +40,7 @@ class AddPostregister extends Migration
             'constraint' => 50
           ]
 
-        });
+        ]);
 
         $this->forge->addPrimaryKey('id');
         $this->forge->createTable('postregister');
