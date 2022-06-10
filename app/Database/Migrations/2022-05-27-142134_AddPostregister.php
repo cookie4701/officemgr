@@ -26,7 +26,7 @@ class AddPostregister extends Migration
           ],
           'post_date' => [
             'type' => 'DATE',
-            'default' => 'NOW()'
+            'default' => 'CURRENT_TIMESTAMP'
           ],
           'area' => [
             'type' => 'VARCHAR',
