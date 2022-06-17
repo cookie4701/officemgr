@@ -39,7 +39,7 @@
   </div>
   </div>
 
-<form method="POST" action="<?= base_url('postregister') ?>" enctype="multipart/form-data">
+<form method="POST" action="<?= base_url('postregister') ?>" enctype="multipart/form-data" id="upload_form">
     <div class="row">
 
 
@@ -54,9 +54,7 @@
           <div class="col-md-4 form-group">
             <label for="">Art</label>
             <select id="select_type" name="select_type" class="form-control">
-              <option>
-                A
-              </option>
+
             </select>
             <span class="text-danger"> <?= isset($validation) ? display_error($validation, 'select_type') : '' ?></span>
           </div>
@@ -79,17 +77,15 @@
 
           <div class="col-md-4 form-group">
             <label for="">Zuständig</label>
-            <select id="select_workarea" name="responsible" class="form-control">
-              <option>
-                A
-              </option>
+            <select id="select_responsible" name="responsible" class="form-control">
+              
             </select>
             <span class="text-danger"> <?= isset($validation) ? display_error($validation, 'responsible') : '' ?></span>
           </div>
 
           <div class="col-md-4 form-group">
             <label for="">Datei</label>
-            <input type="file" class="form-control" name="file_document"  />
+            <input type="file" class="form-control" name="file_document" id="file_document"  />
             <span class="text-danger"> <?= isset($validation) ? display_error($validation, 'file_document') : '' ?></span>
           </div>
 
@@ -100,25 +96,86 @@
       </div>
 </form>
 
-    <div class="row">
-      <div class="col-md-12">
-        ...
-      </div>
+		<div class="row">
+			<div class="col-md-2">
+				Dokumentart
+			</div>
+
+			<div class="col-md-2">
+				Dokument Nummer
+			</div>
+
+			<div class="col-md-2">
+				Datum
+			</div>
+
+			<div class="col-md-2">
+				Bereich
+			</div>
+
+			<div class="col-md-2">
+				Zuständig
+			</div>
+
+			<div class="col-md-2">
+				Beschreibung
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-md-2">
+				Filter Art
+			</div>
+
+			<div class="col-md-2">
+
+			</div>
+
+			<div class="col-md-2">
+				Filter Von Bis
+			</div>
+
+			<div class="col-md-2">
+				Filter Bereich
+			</div>
+
+			<div class="col-md-2">
+				Filter Zuständig
+			</div>
+
+			<div class="col-md-2">
+
+			</div>
+
+		</div>
+
+		<div id="document_table">
+
     </div>
 
 
 	</div>
 
+	<script>
+	var postregister_url = "<?php echo base_url(); ?>/postregister";
+	var document_url = "<?php echo base_url(); ?>/postregister/docs";
+	var doctypes_url = "<?php echo base_url(); ?>/postregister/doctypes";
+	</script>
+
 	<!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   <script src="<?php echo base_url('js/app-document.js'); ?>"></script>
 
   <script>
   $( document ).ready(function() {
-    // local ready things for JavaScript
+
+		set_url("<?php echo base_url(); ?>/postregister");
+
   });
 
   </script>

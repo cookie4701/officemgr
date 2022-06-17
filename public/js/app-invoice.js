@@ -1,7 +1,7 @@
 var rowIdx = 0;
 
 
-$( document ).ready(function() {
+$(document).ready(function() {
 
 
   // Handler for .ready() called.
@@ -13,7 +13,7 @@ $( document ).ready(function() {
     })
   });
 
-  $('#btnAdd').on('click', function (e) {
+  $('#btnAdd').on('click', function(e) {
 
     e.preventDefault();
     // Adding a row inside the tbody.
@@ -69,7 +69,7 @@ $( document ).ready(function() {
     return false;
   });
 
-  $('#posbody').on('click', '.remove', function () {
+  $('#posbody').on('click', '.remove', function() {
 
     // Getting all the rows next to the
     // row containing the clicked button
@@ -77,7 +77,7 @@ $( document ).ready(function() {
 
     // Iterating across all the rows
     // obtained to change the index
-    child.each(function () {
+    child.each(function() {
 
       // Getting <tr> id.
       var id = $(this).attr('id');
@@ -137,8 +137,8 @@ $( document ).ready(function() {
 function pre_calc(obj) {
   var r = obj.find('tr');
 
-  for (var i = 0; i < r.length; i++ ) {
-    calc_row_result( $(r[i]) ) ;
+  for (var i = 0; i < r.length; i++) {
+    calc_row_result($(r[i]));
   }
 }
 
@@ -157,7 +157,7 @@ function calc_row_result(obj) {
   totalprice = totalprice.toFixed(2);
   totalprice = totalprice.replace('.', ',');
 
-  if ( totalprice !== 'NaN') {
+  if (totalprice !== 'NaN') {
     //row.find("td:eq(4) span").text(totalprice);
     row.find("td:eq(4) input").val(totalprice);
   } else {
@@ -192,7 +192,7 @@ function calc_total(objtable, objoutput) {
   totalprice = totalprice.toFixed(2);
   totalprice = totalprice.replace('.', ',');
 
-  if ( totalprice !== 'NaN') {
+  if (totalprice !== 'NaN') {
     objoutput.text(totalprice);
   } else {
     objoutput.text('');

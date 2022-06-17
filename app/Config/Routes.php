@@ -54,11 +54,14 @@ $routes->group('', [ 'filter' => ['moduleaccess', 'authcheck'] ], function($rout
   $routes->get('/invoice',        'InvoiceController::index');
 
   $routes->get('/postregister', 'DocumentRegistryController::index');
+  $routes->get('/postregister/docs', 'DocumentRegistryController::rows');
+  $routes->get('/postregister/doctypes', 'DocumentRegistryController::doctypes');
   $routes->get('/postregister/create', 'DocumentRegistryController::create');
   $routes->post('/postregister', 'DocumentRegistryController::store');
   $routes->post('/postregister/(:num)', 'DocumentRegistryController::update/$1');
   $routes->get('/postregister/(:num)', 'DocumentRegistryController::edit/$1');
-  
+  $routes->get('/postregister/download_pdf/(:num)', 'DocumentRegistryController::get_file/$1');
+
 });
 /*
  * --------------------------------------------------------------------
