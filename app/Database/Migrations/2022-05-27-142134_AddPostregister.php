@@ -45,7 +45,7 @@ class AddPostregister extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('postregister');
+        $this->forge->createTable('postregister', true);
     }
 
     public function down()

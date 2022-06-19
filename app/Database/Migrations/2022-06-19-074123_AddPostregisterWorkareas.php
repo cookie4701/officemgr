@@ -4,36 +4,32 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class AddUsers extends Migration
+class AddPostregisterWorkareas extends Migration
 {
     public function up()
     {
         //
-        $this->forge->addField([
+        $this->forge->addField ([
           'id' => [
             'type' => 'INT',
-            'constraint' => 5,
+            'constraint' => 10,
             'unsigned' => true,
             'auto_increment' => true
           ],
-          'email' => [
+          'workarea'  => [
             'type' => 'VARCHAR',
-            'constraint' => 230
-          ],
-          'password' => [
-            'type' => 'VARCHAR',
-            'constraint' => 200
+            'constraint' => 50,
+            'null' => false
           ]
         ]);
 
         $this->forge->addPrimaryKey('id');
-
-        $this->forge->createTable('users', true);
+        $this->forge->createTable('postregister_workareas', true);
     }
 
     public function down()
     {
         //
-        $this->forge->dropTable('users');
+        $this->forge->dropTable('postregister_workareas');
     }
 }

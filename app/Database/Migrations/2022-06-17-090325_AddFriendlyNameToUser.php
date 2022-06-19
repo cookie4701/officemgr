@@ -14,7 +14,8 @@ class AddFriendlyNameToUser extends Migration
             'type' => 'VARCHAR'
           ]
         ];
-        $this->forge->addColumn('users', $fields);
+        if (! $this->db->fieldExists('friendly_name', 'users') )
+          $this->forge->addColumn('users', $fields);
     }
 
     public function down()

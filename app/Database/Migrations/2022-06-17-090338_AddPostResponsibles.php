@@ -24,11 +24,12 @@ class AddPostResponsibles extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('postregister_responsibles');
+        $this->forge->createTable('postregister_responsibles', true);
     }
 
     public function down()
     {
         //
+        $this->forge->dropTable('postregister_responsibles');
     }
 }

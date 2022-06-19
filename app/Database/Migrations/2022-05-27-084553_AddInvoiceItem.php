@@ -46,7 +46,7 @@ class AddInvoiceItem extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('invoice_item');
+        $this->forge->createTable('invoice_item', true);
     }
 
     public function down()

@@ -19,7 +19,12 @@ function topmenu()
       $mdata[] = [$module->module_path, $module->module_name];
   }
 
-  $mdata[] = ['/auth/logout', 'Logout (' . $user_info->email . ')'];
+  if ( isset($user_info->friendly_name) && $user_info->friendly_name != '') {
+      $mdata[] = ['/auth/logout', 'Logout (' . $user_info->friendly_name . ')'];
+  } else {
+    $mdata[] = ['/auth/logout', 'Logout (' . $user_info->email . ')'];
+  }
+
   return makemenu($mdata);
 }
 

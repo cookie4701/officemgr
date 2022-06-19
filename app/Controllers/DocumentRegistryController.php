@@ -28,6 +28,60 @@ class DocumentRegistryController extends BaseController {
     return $this->response->setJSON($response);
   }
 
+  public function responsibles() {
+    $model_responsible = new \App\Models\DocumentResponsibleModel();
+    $responsibles = $model_responsible->join('users', 'users.id=postregister_responsibles.user')->orderBy('friendly_name')->findAll();
+    $response = [
+      'success' => true,
+      'data' => [
+        'responsibles' => [ [
+          'id' => 0,
+          'email' => 'keine',
+          'friendly_name' => 'Niemand'
+        ],...$responsibles
+        ]
+      ],
+      'msg' => 'Daten wurden geladen!'
+    ];
+    return $this->response->setJSON($response);
+  }
+
+  public function get_workareas() {
+    $model_workareas = new \App\Models\PostregisterWorkareaModel();
+    $workareas = $model_workareas->orderBy('workarea')->findAll();
+    $response = [
+      'success' => true,
+      'data' => [
+        'workareas' => [ ...$workareas ]
+      ],
+      'msg' => 'Arbeitsbereiche wurden geladen'
+    ];
+    return $this->response->setJSON($response);
+  }
+
+  public function store_workarea() {
+    $model_workareas = new \App\Models\PostregisterWorkareaModel();
+    $ent = new \App\Entities\PostregisterWorkarea();
+
+    $response = [
+      'success' => false,
+      'data' => null,
+      'msg' => 'Arbeitsbereich konnte nicht gesichert werden! ' . $this->request->getJsonVar('workarea') . '---'
+    ];
+
+    if ($this->request->getJsonVar('workarea') != '' ) {
+      $ent->workarea = $this->request->getJsonVar('workarea');
+      $model_workareas->save($ent);
+      $response = [
+        'success' => true,
+        'data' => null,
+        'msg' => 'Arbeitsbereich wurde gesichert!'
+      ];
+    }
+
+    return $this->response->setJSON($response);
+  }
+
   public function get_file($document_id) {
     $document_model = new \App\Models\DocumentModel();
     $document = $document_model->find($document_id);

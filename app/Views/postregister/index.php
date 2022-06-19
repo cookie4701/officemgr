@@ -62,11 +62,11 @@
           <div class="col-md-4 form-group">
             <label for="">Bereich</label>
             <select id="select_workarea" name="select_workarea" class="form-control">
-              <option>
-                A
-              </option>
+
             </select>
             <span class="text-danger"> <?= isset($validation) ? display_error($validation, 'select_type') : '' ?></span>
+						<br />
+						Neu: <input type="text" name="workarea" id="workarea" class="form-control"/> <button id="btn_workarea"class="btn btn-primary">+</button>
           </div>
 
           <div class="col-md-4 form-group">
@@ -78,7 +78,7 @@
           <div class="col-md-4 form-group">
             <label for="">Zuständig</label>
             <select id="select_responsible" name="responsible" class="form-control">
-              
+
             </select>
             <span class="text-danger"> <?= isset($validation) ? display_error($validation, 'responsible') : '' ?></span>
           </div>
@@ -171,12 +171,4 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   <script src="<?php echo base_url('js/app-document.js'); ?>"></script>
 
-  <script>
-  $( document ).ready(function() {
-
-		set_url("<?php echo base_url(); ?>/postregister");
-
-  });
-
-  </script>
 </body>

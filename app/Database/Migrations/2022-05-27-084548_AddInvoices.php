@@ -78,7 +78,7 @@ class AddInvoices extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('invoices');
+        $this->forge->createTable('invoices', true);
     }
 
     public function down()

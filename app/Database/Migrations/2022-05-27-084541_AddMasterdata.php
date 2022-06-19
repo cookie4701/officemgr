@@ -67,7 +67,7 @@ class AddMasterdata extends Migration
           ]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('masterdata_partners');
+        $this->forge->createTable('masterdata_partners', true);
     }
 
     public function down()

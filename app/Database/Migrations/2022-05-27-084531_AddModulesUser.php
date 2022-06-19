@@ -28,7 +28,7 @@ class AddModulesUser extends Migration
           ]
         ]);
         $this->forge->addPrimaryKey('id');
-        $this->forge->createTable('module_user');
+        $this->forge->createTable('module_user', true);
     }
 
     public function down()
