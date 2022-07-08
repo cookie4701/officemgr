@@ -65,6 +65,11 @@ $routes->group('', [ 'filter' => ['moduleaccess', 'authcheck'] ], function($rout
   $routes->get('/postregister/workarea', 'DocumentRegistryController::get_workareas');
   $routes->post('/postregister/workarea', 'DocumentRegistryController::store_workarea');
 
+  $routes->get('/requests', 'RequestsController::index');
+  $routes->get('/requests/create', 'RequestsController::create');
+  $routes->get('/requests/(:num)', 'RequestsController::edit');
+  $routes->post('/requests/(:num)', 'RequestsController::update');
+
 });
 /*
  * --------------------------------------------------------------------
