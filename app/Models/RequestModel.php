@@ -11,7 +11,7 @@ class RequestModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
-    protected $returnType       = \App\Entities\Request;
+    protected $returnType       = \App\Entities\Request::class;
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [

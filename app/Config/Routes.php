@@ -69,6 +69,10 @@ $routes->group('', [ 'filter' => ['moduleaccess', 'authcheck'] ], function($rout
   $routes->get('/requests/create', 'RequestsController::create');
   $routes->get('/requests/(:num)', 'RequestsController::edit');
   $routes->post('/requests/(:num)', 'RequestsController::update');
+  $routes->post('/requests', 'RequestsController::store');
+
+  $routes->get('/admin', 'AdminController::index');
+  $routes->post('/admin/module_user', 'AdminController::assign_module_user');
 
 });
 /*

@@ -45,5 +45,15 @@ class ModuleRequestSeeder extends Seeder
 
         foreach ($data  as $row)
           $this->db->table('request_types')->insert($row);
+
+        $data = [
+          [ 'label' => 'Übermittelt, Entscheidung offen' ],
+          [ 'label' => 'Angenommen' ],
+          [ 'label' => 'Abgelehnt' ],
+          [ 'label' => 'Änderung erbeten' ]
+        ];
+
+        foreach ($data  as $row)
+          $this->db->table('request_status')->insert($row);
     }
 }

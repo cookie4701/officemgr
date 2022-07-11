@@ -29,14 +29,14 @@
 		<?php endif ?>
 
 
-		<form action="<?= base_url('request/store') ?>" method="post" >
+		<form action="<?= base_url('requests') ?>" method="post" >
 			<?= csrf_field(); ?>
 			<div class="form-group">
         <label for="">Art der Anfrage</label>
-        <select name="request_type">
+        <select name="request_type" class="form-control">
           <?php
             foreach ($request_types as $request_type) {
-              echo "<option>
+              echo "<option value=\"" . $request_type->id . "\">
                 $request_type->label
               </option>";
             }
@@ -58,14 +58,14 @@
 			</div>
 
 			<div class="form-group">
-				<label for="">Enddatum 2</label>
+				<label for="">Enddatum</label>
 				<input type="text" class="form-control" name="end_date" value="<?= set_value('end_date'); ?>" />
 				<span class="text-danger"> <?= isset($validation) ? display_error($validation, 'end_date') : '' ?></span>
 			</div>
 
 			<div class="form-group">
 				<label for="">Beschreibung (falls erforderlich)</label>
-        <textarea name="description"><?= set_value('description'); ?> </textarea>
+        <textarea name="description"><?= set_value('description'); ?></textarea>
 				<span class="text-danger"> <?= isset($validation) ? display_error($validation, 'description') : '' ?></span>
 			</div>
 
