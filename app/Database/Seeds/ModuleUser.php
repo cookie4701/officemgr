@@ -12,16 +12,31 @@ class ModuleUser extends Seeder
         $data = [
           [
             'module' => 1,
-            'user'  => 1
+            'user'   => 1
           ],
           [
             'module' => 2,
-            'user'  => 1
+            'user'   => 1
+          ],
+          [
+            'user'   => 1,
+            'module' => 3
+          ],
+          [
+            'user'   => 1,
+            'module' => 4
+          ],
+          [
+            'user'   => 1,
+            'module' => 5
           ]
 
         ];
 
         foreach($data as $row)
           $this->db->table('module_user')->insert($row);
+
+
+
     }
 }

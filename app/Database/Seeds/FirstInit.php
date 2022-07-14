@@ -13,7 +13,6 @@ class FirstInit extends Seeder
         $this->call('Demouser');
         $this->call('Modules');
         $this->call('ModuleUser');
-        $this->call('ModulePostregisterSeeder');
         $this->call('ModuleRequestSeeder');
     }
 }

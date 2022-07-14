@@ -12,6 +12,58 @@ class RequestsController extends BaseController
       helper(['url', 'Form', 'form', 'Menu', 'download']);
     }
 
+    public function process_requests_index() {
+      $user = session()->get('loggedUser');
+
+      $model_types = new \App\Models\RequestResponsibleModel();
+      $model_requests = new \App\Models\RequestModel();
+
+      $responsibilities = $model_types->where('user', $user)->findAll();
+      $ids = [];
+      foreach ($responsibilities as $responsibility) {
+        $ids[] = (int) $responsibility->request_type;
+      }
+
+      $open_requests = $model_requests
+        ->select('requests.id as id, requests.startpoint as start_date, requests.endpoint as end_date, requests.status as numstatus, request_status.label as status, request_types.label as request_type, users.email as email, requests.requester as user')
+        ->whereIn('request_type', $ids)
+        ->where('status', 1)
+        ->join('users', 'users.id=requests.requester', 'LEFT')
+        ->join('request_types', 'requests.request_type=request_types.id', 'LEFT')
+        ->join('request_status', 'requests.status=request_status.id', 'LEFT')
+        ->orderBy('requests.startpoint', 'DESC')
+        ->findAll();
+
+        foreach ($open_requests as $entry) {
+          $temp_date = $mdate = Time::parse($entry->start_date, 'America/Chicago', 'en_US');
+          $entry->start_date = $temp_date->toLocalizedString('dd.MM.YYYY');
+
+          $temp_date = $mdate = Time::parse($entry->end_date, 'America/Chicago', 'en_US');
+          $entry->end_date = $temp_date->toLocalizedString('dd.MM.YYYY');
+        }
+
+        $data = [
+          'requests' => $open_requests,
+          'request_states' => $this->get_request_states()
+        ];
+
+        return view('request/process', $data);
+
+    }
+
+    public function process_requests_update() {
+      $user = $this->request->getVar('userid');
+      $request_id = $this->request->getVar('requestid');
+      $new_status = $this->request->getVar('status');
+
+      $model = new \App\Models\RequestModel();
+      $entry = $model->find($request_id);
+      $entry->status = $new_status;
+      $model->save($entry);
+
+      return redirect()->with('success', 'Statusänderung war erfolgreich')->to('request/process');
+    }
+
     public function index()
     {
         //
@@ -67,6 +119,11 @@ class RequestsController extends BaseController
     private function get_request_types() {
       $model_type = new \App\Models\RequestTypeModel();
       return $model_type->orderBy('label', 'ASC')->findAll();
+    }
+
+    private function get_request_states() {
+      $model_status = new \App\Models\RequestStatusModel();
+      return $model_status->orderBy('label', 'ASC')->findAll();
     }
 
     public function store() {

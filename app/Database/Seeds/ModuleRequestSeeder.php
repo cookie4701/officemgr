@@ -8,37 +8,22 @@ class ModuleRequestSeeder extends Seeder
 {
     public function run()
     {
-        // insert model postregister
+      // request types
         $data = [
           [
-            'id' => 4,
-            'module_name' => 'Anfragen',
-            'module_path' => 'requests'
-          ]
-        ];
-
-        foreach ($data  as $row)
-          $this->db->table('modules')->insert($row);
-
-        $data = [
-          'user' => 1,
-          'module' => 4
-        ];
-
-        $this->db->table('module_user')->insert($data);
-
-        // request types
-        $data = [
-          [
+            'id' => 1,
             'label' => 'Minibus Reservierung'
           ],
           [
+            'id' => 2,
             'label' => 'Urlaubsantrag'
           ],
           [
+            'id' => 3,
             'label' => 'Weiterbildung'
           ],
           [
+            'id' => 4,
             'label' => 'Homeoffice'
           ]
         ];
@@ -47,10 +32,10 @@ class ModuleRequestSeeder extends Seeder
           $this->db->table('request_types')->insert($row);
 
         $data = [
-          [ 'label' => 'Übermittelt, Entscheidung offen' ],
-          [ 'label' => 'Angenommen' ],
-          [ 'label' => 'Abgelehnt' ],
-          [ 'label' => 'Änderung erbeten' ]
+          [ 'id' => 1, 'label' => 'Übermittelt, Entscheidung offen' ],
+          [ 'id' => 2, 'label' => 'Angenommen' ],
+          [ 'id' => 3, 'label' => 'Abgelehnt' ],
+          [ 'id' => 4, 'label' => 'Änderung erbeten' ]
         ];
 
         foreach ($data  as $row)

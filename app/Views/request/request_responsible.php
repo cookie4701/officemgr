@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Adminpanel</title>
+	<title>Verantwortliche definieren</title>
 	<meta name="description" content="The small framework with powerful features">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" type="image/png" href="/favicon.ico"/>
@@ -17,7 +17,7 @@
 
     <div class="row">
         <div class="col-md-12">
-          <h4>Adminpanel</h4>
+          <h4>Verantwortliche definieren</h4>
         </div>
     </div>
 
@@ -49,37 +49,32 @@
     <?php
 		if (!isset($users)) exit;
       foreach ($users as $user) {
-
+				log_message('error', $user['id']);
 
     ?>
       <div class="row">
         <div class="col-md-2">
           <?= $user['email'] ?>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
 
-					<form action="<?= base_url('admin/modules') ?>" method="post" >
+					<form action="<?= base_url('requestsconfig') ?>" method="post" >
 
 						<?= csrf_field(); ?>
 						<input type="hidden" name="userid" value="<?= $user['id'] ?>" />
 							<?php
-							echo "<div class=\"form-group\">\n";
-            foreach ($user['modules'] as $module) {
-              if ($module['has'] == 1) {
+            foreach ($user['responsible'] as $responsibility) {
+              if ($responsibility['has'] == 1) {
 
-
-
-								echo "<div class=\"form-check form-check-inline\"> \n";
-                echo "<input class=\"form-control form-check-input\" id=\"c" . $module['id'] . "\" name=\"chk_module[]\" type=\"checkbox\" value=\"" . $module['id']  .  "\" checked /> <label class=\"form-check-label\" for=\"c" . $module['id'] . "\">" . $module['label'] . " </label>\n";
-								echo "</div>\n";
+								echo "<div class=\"form-check form-check-inline\">";
+                echo "<input class=\"form-control form-check-input\" name=\"chk_resp[]\" type=\"checkbox\" value=\"" . $responsibility['id']  .  "\" checked /> <label class=\"form-check-label\" for=\"\">" . $responsibility['label'] . " </label>";
+								echo "</div>";
               } else {
-								echo "<div class=\"form-check form-check-inline\">\n";
-                echo "<input class=\"form-control form-check-input\" id=\"c" . $module['id'] . "\" name=\"chk_module[]\" type=\"checkbox\" value=\"" . $module['id']  .  "\" /> <label class=\"form-check-label\" for=\"c" . $module['id'] . "\" /> " . $module['label'] . " </label>\n";
-								echo "</div>\n";
-
+								echo "<div class=\"form-check form-check-inline\">";
+                echo "<input class=\"form-control form-check-input\" name=\"chk_resp[]\" type=\"checkbox\" value=\"" . $responsibility['id']  .  "\" <label class=\"form-check-label\" for=\"\" /> " . $responsibility['label'] . " </label>";
+								echo "</div>";
               }
             }
-						echo "</div>\n";
           ?>
 
         </div>
