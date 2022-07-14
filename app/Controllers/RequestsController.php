@@ -51,29 +51,43 @@ class RequestsController extends BaseController
 
     }
 
+    public function update($id) {
+      $model = new \App\Models\RequestModel();
+      $dataset = $model->find($id);
+      $dataset->startpoint = Time::parse($this->request->getVar('start_date'), 'Europe/Berlin', 'de_DE');
+      $dataset->endpoint = Time::parse($this->request->getVar('end_date'), 'Europe/Berlin', 'de_DE');
+      $dataset->status = 1;
+      $dataset->description = $this->request->getVar('description');
+      $model->save($dataset);
+      return
+        redirect()
+        ->with('success', 'Antrag wurde erneut eingereicht!')
+        ->to('/requests');
+
+
+    }
+
     public function process_requests_update() {
       $user = $this->request->getVar('userid');
       $request_id = $this->request->getVar('requestid');
-      $new_status = $this->request->getVar('status');
+      $new_status = $this->request->getVar('request_status');
 
       $model = new \App\Models\RequestModel();
       $entry = $model->find($request_id);
       $entry->status = $new_status;
       $model->save($entry);
 
-      return redirect()->with('success', 'Statusänderung war erfolgreich')->to('request/process');
+      return redirect()->with('success', 'Statusänderung war erfolgreich')->to('requests/process');
     }
 
     public function index()
     {
-        //
-
         $model_request = new \App\Models\RequestModel();
 
         $userid = session()->get('loggedUser');
 
         $entries = $model_request
-          ->select('requests.id as id, requests.startpoint as start_date, requests.endpoint as end_date, request_status.label as status, request_types.label as request_type')
+          ->select('requests.id as id, requests.startpoint as start_date, requests.endpoint as end_date, request_status.label as status, requests.status as numstatus, request_types.label as request_type')
           ->where('requester', $userid)
           ->orderBy('start_date', 'DESC')
           ->join('request_types', 'requests.request_type=request_types.id', 'LEFT')
@@ -95,8 +109,31 @@ class RequestsController extends BaseController
         return view('request/myrequests', $data);
     }
 
-    public function edit() {
+    public function edit($idrequest) {
+      $model = new \App\Models\RequestModel();
 
+      $dataset = $model
+      ->select('requests.id as id, requests.description as description, requests.requester as user, requests.startpoint as start_date, requests.endpoint as end_date, request_status.label as request_status, request_types.label as request_type')
+      ->join('request_types', 'requests.request_type=request_types.id', 'LEFT')
+      ->join('request_status', 'requests.status=request_status.id', 'LEFT')
+      ->find($idrequest);
+
+      if ($dataset->user != session()->get('loggedUser')) {
+        return redirect()
+          ->with('fail', 'Du bist nicht berechtigt diese Anfrage zu sehen')
+          ->to('/requests');
+      }
+
+      $temp_date = $mdate = Time::parse($dataset->start_date, 'America/Chicago', 'en_US');
+      $dataset->start_date = $temp_date->toLocalizedString('dd.MM.YYYY');
+
+      $temp_date = $mdate = Time::parse($dataset->end_date, 'America/Chicago', 'en_US');
+      $dataset->end_date = $temp_date->toLocalizedString('dd.MM.YYYY');
+
+      $data = [
+        'userdata' => $dataset
+      ];
+      return view('request/edit', $data);
     }
 
     public function create() {

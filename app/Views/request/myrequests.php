@@ -58,7 +58,8 @@
             <?= $request->status ?>
         </td>
         <td>
-          <a href="">Bearbeiten</a>
+					<?= $request->numstatus == 4 ? "<a href=\"" . base_url('requests/' . $request->id) . "\">Bearbeiten</a>" :  "";  ?>
+
         </td>
       </tr>
     <?php

@@ -68,7 +68,7 @@
             <?= csrf_field(); ?>
 						<input type="hidden" name="userid" value="<?= $request->requester ?>" />
             <input type="hidden" name="requestid" value="<?= $request->id ?>" />
-            <select name="request_type" class="form-control">
+            <select name="request_status" class="form-control">
               <?php
                 foreach ($request_states as $request_status) {
                   $selected = '';
