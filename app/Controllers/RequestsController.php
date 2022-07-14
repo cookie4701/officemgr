@@ -217,4 +217,30 @@ class RequestsController extends BaseController
 
       return redirect()->with('success', 'Antrag erfolgreich eingereicht. Er wird nun noch geprüft und genehmigt.')->to('/requests');
     }
+
+    function get_events($type) {
+      // if $type is 0, display all available
+      $userid = 0;
+      if (session()->has('loggedUser')) $userid = session()->get('loggedUser');
+
+      $level = 0;
+      if ($userid > 0) $level += 1;
+
+      $model = new \App\Models\RequestModel();
+
+      $rows = $model
+        ->select('requests.startpoint as start_date, requests.endpoint as end_date, users.email as email, request_types.label as label')
+        ->join('request_types', 'requests.request_type=request_types.id')
+        ->join('users', 'requests.requester=users.id')
+        ->where('status', 2)
+        ->where('request_types.visibility >', $level)
+        ->orderBy('startpoint', 'DESC')
+        ->findAll();
+
+        $data = [
+          'events' => $rows
+        ];
+
+        return view('requests/events', $data);
+    }
 }

@@ -8,7 +8,7 @@ class RequestTypeModel extends Model
 {
   protected $table = 'request_types';
   protected $primaryKey = 'id';
-  protected $allowedFields = ['label'];
+  protected $allowedFields = ['label', 'visibility'];
 
   protected $returnType    = \App\Entities\RequestType::class;
 }
