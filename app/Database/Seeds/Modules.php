@@ -27,7 +27,7 @@ class Modules extends Seeder
           ],
           [
             'id' => 4,
-            'module_name' => 'Anfragen',
+            'module_name' => 'Meine Anfragen',
             'module_path' => 'requests'
           ],
           [
@@ -44,6 +44,11 @@ class Modules extends Seeder
             'id' => 7,
             'module_name' => 'Anfragen bearbeiten',
             'module_path' => 'requests/process'
+          ],
+          [
+            'id' => 8,
+            'module_name' => 'Events ansehen',
+            'module_path' => 'events'
           ]
         ];
 

@@ -71,7 +71,9 @@ $routes->group('', [ 'filter' => ['moduleaccess', 'authcheck'] ], function($rout
   $routes->post('/requests/(:num)', 'RequestsController::update/$1');
   $routes->post('/requests', 'RequestsController::store');
   $routes->get('requests/process', 'RequestsController::process_requests_index');
-  $routes->post('requests/process', 'RequestsController::process_requests_update/');
+  $routes->post('requests/process', 'RequestsController::process_requests_update');
+
+  $routes->get('events', 'RequestsController::get_events');
 
   $routes->get('/admin', 'AdminController::index');
   $routes->post('/admin/modules', 'AdminController::modules');

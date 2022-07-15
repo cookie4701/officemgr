@@ -12,19 +12,23 @@ class ModuleRequestSeeder extends Seeder
         $data = [
           [
             'id' => 1,
-            'label' => 'Minibus Reservierung'
+            'label' => 'Minibus Reservierung',
+            'visibility' => 1
           ],
           [
             'id' => 2,
-            'label' => 'Urlaubsantrag'
+            'label' => 'Urlaubsantrag',
+            'visibility' => 1
           ],
           [
             'id' => 3,
-            'label' => 'Weiterbildung'
+            'label' => 'Weiterbildung',
+            'visibility' => 1
           ],
           [
             'id' => 4,
-            'label' => 'Homeoffice'
+            'label' => 'Homeoffice',
+            'visibility' => 1
           ]
         ];
 

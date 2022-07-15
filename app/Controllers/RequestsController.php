@@ -23,16 +23,31 @@ class RequestsController extends BaseController
       foreach ($responsibilities as $responsibility) {
         $ids[] = (int) $responsibility->request_type;
       }
+      $open_requests = '';
 
-      $open_requests = $model_requests
-        ->select('requests.id as id, requests.startpoint as start_date, requests.endpoint as end_date, requests.status as numstatus, request_status.label as status, request_types.label as request_type, users.email as email, requests.requester as user')
-        ->whereIn('request_type', $ids)
-        ->where('status', 1)
-        ->join('users', 'users.id=requests.requester', 'LEFT')
-        ->join('request_types', 'requests.request_type=request_types.id', 'LEFT')
-        ->join('request_status', 'requests.status=request_status.id', 'LEFT')
-        ->orderBy('requests.startpoint', 'DESC')
-        ->findAll();
+      if ( $this->request->getVar('showall') != null) {
+        $open_requests = $model_requests
+          ->select('requests.id as id, requests.description as description, requests.startpoint as start_date, requests.endpoint as end_date, requests.status as numstatus, request_status.label as status, request_types.label as request_type, users.email as email, requests.requester as user')
+          ->whereIn('request_type', $ids)
+          ->join('users', 'users.id=requests.requester', 'LEFT')
+          ->join('request_types', 'requests.request_type=request_types.id', 'LEFT')
+          ->join('request_status', 'requests.status=request_status.id', 'LEFT')
+          ->orderBy('requests.startpoint', 'DESC')
+          ->findAll();
+
+      } else {
+        $open_requests = $model_requests
+          ->select('requests.id as id, requests.startpoint as start_date, requests.endpoint as end_date, requests.status as numstatus, request_status.label as status, request_types.label as request_type, users.email as email, requests.requester as user')
+          ->whereIn('request_type', $ids)
+          ->where('status', 1)
+          ->join('users', 'users.id=requests.requester', 'LEFT')
+          ->join('request_types', 'requests.request_type=request_types.id', 'LEFT')
+          ->join('request_status', 'requests.status=request_status.id', 'LEFT')
+          ->orderBy('requests.startpoint', 'DESC')
+          ->findAll();
+
+      }
+
 
         foreach ($open_requests as $entry) {
           $temp_date = $mdate = Time::parse($entry->start_date, 'America/Chicago', 'en_US');
@@ -215,10 +230,28 @@ class RequestsController extends BaseController
 
       $model_request->save($data);
 
+      $email = \Config\Services::email();
+      $request_type = $this->request->getVar('request_type');
+      $model_type = new \App\Models\RequestResponsibleModel();
+      $responsibles = $model_type
+        ->select('requests_responsibles.user,  users.email as email')
+        ->join('users', 'requests_responsibles.user=users.id', 'LEFT')
+        ->where('requests_responsibles.request_type', $request_type)
+        ->findAll();
+      $email->setFrom(getenv('email.SMTPAddress'), 'AUTOMATISCHE NACHRICHT');
+      $email->setSubject('Es gibt eine neue Anfrage');
+      $rcpt = array("it@jugendbuero.be");
+      foreach ($responsibles as $mail) {
+        $rcpt[] = $mail->email;
+      }
+      $email->setMessage('Es wartet mindestens eine neue Anfrage auf dich!');
+      $email->setTo($rcpt);
+      if (! $email->send() ) session()->setFlashdata('fail', 'Anfrage war ok, allerdings gab es ein Problem beim E-Mail Versand. Bitte benachrichtige den Verantwortlichen');
+
       return redirect()->with('success', 'Antrag erfolgreich eingereicht. Er wird nun noch geprüft und genehmigt.')->to('/requests');
     }
 
-    function get_events($type) {
+    function get_events() {
       // if $type is 0, display all available
       $userid = 0;
       if (session()->has('loggedUser')) $userid = session()->get('loggedUser');
@@ -229,18 +262,27 @@ class RequestsController extends BaseController
       $model = new \App\Models\RequestModel();
 
       $rows = $model
-        ->select('requests.startpoint as start_date, requests.endpoint as end_date, users.email as email, request_types.label as label')
-        ->join('request_types', 'requests.request_type=request_types.id')
+        ->select('requests.startpoint as start_date, requests.endpoint as end_date, users.email as email, request_types.label as label, requests.description as description')
+        ->join('request_types', 'requests.request_type=request_types.id', 'LEFT')
         ->join('users', 'requests.requester=users.id')
         ->where('status', 2)
-        ->where('request_types.visibility >', $level)
+        ->where('endpoint > DATE_SUB(NOW(), INTERVAL 7 DAY)')
+        ->where('request_types.visibility <=', $level)
         ->orderBy('startpoint', 'DESC')
         ->findAll();
+
+      foreach ($rows as $row) {
+        $temp_date = $mdate = Time::parse($row->start_date, 'America/Chicago', 'en_US');
+        $row->start_date = $temp_date->toLocalizedString('dd.MM.YYYY');
+
+        $temp_date = $mdate = Time::parse($row->end_date, 'America/Chicago', 'en_US');
+        $row->end_date = $temp_date->toLocalizedString('dd.MM.YYYY');
+      }
 
         $data = [
           'events' => $rows
         ];
 
-        return view('requests/events', $data);
+        return view('request/events', $data);
     }
 }

@@ -19,6 +19,12 @@
     <?php echo topmenu(); ?>
     <?php require_once('menu.php'); ?>
 
+		<div class="row">
+			<div class="col-md-2">
+				<a href="<?= base_url('requests/process?showall=1') ?>">Alle anzeigen</a>
+			</div>
+		</div>
+
     <?php if (!empty(session()->getFlashdata('fail'))) : ?>
       <div class="alert alert-danger"><?= session()->getFlashdata('fail'); ?>  </div>
     <?php endif ?>
@@ -33,16 +39,23 @@
         <div class="col-md-1">
           Mail
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
           Datum
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
           Art
         </div>
+
+				<div class="col-md-2">
+					Beschreibung
+				</div>
         <div class="col-md-1">
           Status
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
+
+        </div>
+				<div class="col-md-2">
 
         </div>
       </div>
@@ -51,19 +64,22 @@
       foreach ($requests as $request) {
     ?>
       <div class="row">
-        <div class="col-auto">
+        <div class="col-md-1">
           <?= $request->email ?>
         </div>
-        <div class="col-auto">
+        <div class="col-md-2">
           <?= $request->start_date ?> - <?= $request->end_date ?>
         </div>
-        <div class="col-auto">
+        <div class="col-md-2">
           <?= $request->request_type ?>
         </div>
-        <div class="col-auto">
+				<div class="col-md-2">
+					<?= $request->description ?>
+				</div>
+        <div class="col-md-1">
             <?= $request->status ?>
         </div>
-        <div class="col-auto">
+        <div class="col-md-2">
           <form action="<?= base_url('requests/process') ?>" method="post" >
             <?= csrf_field(); ?>
 						<input type="hidden" name="userid" value="<?= $request->requester ?>" />
@@ -80,7 +96,7 @@
                ?>
             </select>
           </div>
-          <div class="col-auto">
+          <div class="col-md-2">
                       <button class="form-control" type="submit">Speichern</button>
           </form>
         </div>
