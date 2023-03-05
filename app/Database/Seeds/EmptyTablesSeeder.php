@@ -18,5 +18,9 @@ class EmptyTablesSeeder extends Seeder
         $this->db->table('postregister')->emptyTable();
         $this->db->table('users')->emptyTable();
         $this->db->table('postregister_responsibles')->emptyTable();
+        $this->db->table('request_types')->emptyTable();
+        $this->db->table('request_status')->emptyTable();
+        $this->db->table('requests')->emptyTable();
+        $this->db->table('requests_responsibles')->emptyTable();
     }
 }

@@ -8,6 +8,7 @@
     "packages": [
         {
             "name": "codeigniter4/framework",
+<<<<<<< HEAD
             "version": "v4.3.2",
             "source": {
                 "type": "git",
@@ -18,6 +19,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/codeigniter4/framework/zipball/e91e4fa20bb4440bf21513fe9b702db2269ca921",
                 "reference": "e91e4fa20bb4440bf21513fe9b702db2269ca921",
+=======
+            "version": "v4.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeigniter4/framework.git",
+                "reference": "f65a2cff3a572c58c8ab9c8f61bdba904362b549"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/f65a2cff3a572c58c8ab9c8f61bdba904362b549",
+                "reference": "f65a2cff3a572c58c8ab9c8f61bdba904362b549",
+>>>>>>> 61c46155a4d1b5949b9bee84d5e8d13e5e7ddd53
                 "shasum": ""
             },
             "require": {
@@ -78,7 +91,76 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
+<<<<<<< HEAD
             "time": "2023-02-18T10:37:34+00:00"
+=======
+            "time": "2022-06-16T13:53:25+00:00"
+        },
+        {
+            "name": "kint-php/kint",
+            "version": "4.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kint-php/kint.git",
+                "reference": "fa53c4333cda79dc9cb002cfa029abe994d0ae00"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kint-php/kint/zipball/fa53c4333cda79dc9cb002cfa029abe994d0ae00",
+                "reference": "fa53c4333cda79dc9cb002cfa029abe994d0ae00",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpspec/prophecy-phpunit": "^2",
+                "phpunit/phpunit": "^9.0",
+                "seld/phar-utils": "^1.0",
+                "symfony/finder": "^3.0 || ^4.0 || ^5.0",
+                "vimeo/psalm": "^4.0"
+            },
+            "suggest": {
+                "kint-php/kint-helpers": "Provides extra helper functions",
+                "kint-php/kint-twig": "Provides d() and s() functions in twig templates"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "init.php"
+                ],
+                "psr-4": {
+                    "Kint\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Vollebregt",
+                    "homepage": "https://github.com/jnvsor"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/kint-php/kint/graphs/contributors"
+                }
+            ],
+            "description": "Kint - debugging tool for PHP developers",
+            "homepage": "https://kint-php.github.io/kint/",
+            "keywords": [
+                "debug",
+                "kint",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/kint-php/kint/issues",
+                "source": "https://github.com/kint-php/kint/tree/4.1.2"
+            },
+            "time": "2022-02-22T20:32:24+00:00"
+>>>>>>> 61c46155a4d1b5949b9bee84d5e8d13e5e7ddd53
         },
         {
             "name": "laminas/laminas-escaper",
@@ -1001,6 +1083,7 @@
         },
         {
             "name": "phpunit/phpunit",
+<<<<<<< HEAD
             "version": "9.6.4",
             "source": {
                 "type": "git",
@@ -1011,6 +1094,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9125ee085b6d95e78277dc07aa1f46f9e0607b8d",
                 "reference": "9125ee085b6d95e78277dc07aa1f46f9e0607b8d",
+=======
+            "version": "9.5.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit.git",
+                "reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0e32b76be457de00e83213528f6bb37e2a38fcb1",
+                "reference": "0e32b76be457de00e83213528f6bb37e2a38fcb1",
+>>>>>>> 61c46155a4d1b5949b9bee84d5e8d13e5e7ddd53
                 "shasum": ""
             },
             "require": {
@@ -1042,6 +1137,12 @@
                 "sebastian/type": "^3.2",
                 "sebastian/version": "^3.0.2"
             },
+<<<<<<< HEAD
+=======
+            "require-dev": {
+                "phpspec/prophecy-phpunit": "^2.0.1"
+            },
+>>>>>>> 61c46155a4d1b5949b9bee84d5e8d13e5e7ddd53
             "suggest": {
                 "ext-soap": "*",
                 "ext-xdebug": "*"
@@ -1083,7 +1184,11 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.4"
+=======
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.21"
+>>>>>>> 61c46155a4d1b5949b9bee84d5e8d13e5e7ddd53
             },
             "funding": [
                 {
@@ -1099,7 +1204,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2023-02-27T13:06:37+00:00"
+=======
+            "time": "2022-06-19T12:14:25+00:00"
+>>>>>>> 61c46155a4d1b5949b9bee84d5e8d13e5e7ddd53
         },
         {
             "name": "psr/container",

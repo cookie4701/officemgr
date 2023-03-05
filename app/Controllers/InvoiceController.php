@@ -261,9 +261,6 @@ class InvoiceController extends BaseController
           }
       }
 
-
-
-
       $ent_invoice = new \App\Entities\Invoice();
 
       $mdate = Time::parse($this->request->getVar('invoice_date'), 'Europe/Berlin', 'de_DE');
