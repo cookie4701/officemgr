@@ -90,6 +90,7 @@ class InvoiceController extends BaseController
 
       $invoice_items_model = new \App\Models\InvoiceItemsModel();
 
+      /*
       $invoice_items = $this->request->getPost([
         'pos',
         'label',
@@ -98,11 +99,20 @@ class InvoiceController extends BaseController
         'item_id',
         'vat'
       ]);
+      */
+      $invoice_items = $this->request->getPost('row');
 
-      if (is_array($invoice_items['item_id'])) {
+      $invoice_ids = array();
+
+      for ($k = 1; $k < count($invoice_items)+1; $k++ ) {
+        if ( isset($invoice_items[$k]['item_id']) )
+          $invoice_ids[] = $invoice_items[$k]['item_id'];
+      }
+
+      if (is_array($invoice_ids) && count($invoice_ids) > 0) {
         $invoice_items_model
           ->where('invoice', $id)
-          ->whereNotIn('id', $invoice_items['item_id'])
+          ->whereNotIn('id', $invoice_ids)
           ->delete();
       } else if (isset($invoice_items['item_id'])) {
         $invoice_items_model
@@ -117,11 +127,12 @@ class InvoiceController extends BaseController
       }
 
       // check if anything left
-      if (! isset($invoice_items['item_id'])  )
+      if (count($invoice_items) <= 0  )
         return redirect()
         ->to('/invoice/' . $id)
         ->with('success', 'Datensatz wurde gespeichert redirect simple');
 
+      /*
       if (! is_array($invoice_items['item_id'])) {
         if (isset($ent)) unset($ent);
         $ent = null;
@@ -152,32 +163,41 @@ class InvoiceController extends BaseController
         ->to('/invoice/' . $id)
         ->with('success', 'Datensatz wurde gespeichert');
       }
+      */
 
-      for ($i = 0; $i < count($invoice_items['item_id']); $i++ ) {
+
+
+      for ($i = 1; $i < count($invoice_items)+1; $i++ ) {
         if (isset($ent)) unset($ent);
         $ent = null;
 
-        if ($invoice_items['item_id'][$i] <= 0 ) {
+        if (! isset($invoice_items[$i]['item_id']) || $invoice_items[$i]['item_id'] <= 0 ) {
           // create new Entity
           //session()->setFlashdata('success', 'new ent');
           $ent = new \App\Entities\InvoiceItem();
 
         } else {
-          session()->setFlashdata('success', 'updating ent');
-          $ent = $invoice_items_model->find($invoice_items['item_id'][$i]);
+          session()->setFlashdata('success', 'updating ent ' . $invoice_items[$i]['item_id']);
+          $ent = $invoice_items_model->find($invoice_items[$i]['item_id']);
 
         }
 
-        $unit_price = $invoice_items['unit_price'][$i];
+        $unit_price = $invoice_items[$i]['unit_price'];
+
         $unit_price = str_replace(',', '.', $unit_price);
         $unit_price = floatval($unit_price);
         log_message('critical', $unit_price);
-
+        session()->setFlashdata('success', 'id ' . $ent->invoice);
         $ent->invoice = $id;
-        $ent->position = $invoice_items['pos'][$i];
-        $ent->label = $invoice_items['label'][$i];
-        $ent->vat = $invoice_items['vat'][$i];
-        $ent->amount = $invoice_items['item_amount'][$i];
+
+        $ent->position = $invoice_items[$i]['pos'];
+        $ent->label = $invoice_items[$i]['label'];
+
+        if ( isset($invoice_items[$i]['vat']))
+          $ent->vat = $invoice_items[$i]['vat'];
+        else
+          $ent->vat = 0.0;
+        $ent->amount = $invoice_items[$i]['item_amount'];
         $ent->unit_price = $unit_price;
 
         if ($ent->hasChanged() ) $invoice_items_model->save($ent);
@@ -266,25 +286,20 @@ class InvoiceController extends BaseController
       $last_id = $invoice_model->getInsertID();
 
 
-      $invoice_items = $this->request->getPost([
-        'pos',
-        'label',
-        'item_amount',
-        'unit_price'
-      ]);
+      $invoice_items = $this->request->getPost('row');
 
       $invoice_items_model = new \App\Models\InvoiceItemsModel();
 
 
-      for ($i = 0; $i < count($invoice_items['pos']); $i++ )
+      for ($i = 1; $i < count($invoice_items)+1; $i++ )
       {
         $ent = new \App\Entities\InvoiceItem();
         $ent->invoice = $last_id;
-        $ent->position = $invoice_items['pos'][$i];
-        $ent->label = $invoice_items['label'][$i];
+        $ent->position = $invoice_items[$i]['pos'];
+        $ent->label = $invoice_items[$i]['label'];
         $ent->vat = 0.0;
-        $ent->amount = floatval( str_replace(',', '.', $invoice_items['item_amount'][$i])) ;
-        $ent->unit_price = floatval( str_replace(',', '.', $invoice_items['unit_price'][$i])) ;
+        $ent->amount = floatval( str_replace(',', '.', $invoice_items[$i]['item_amount'])) ;
+        $ent->unit_price = floatval( str_replace(',', '.', $invoice_items[$i]['unit_price'])) ;
 
         $invoice_items_model->save($ent);
       }

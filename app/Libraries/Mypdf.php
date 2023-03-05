@@ -83,11 +83,11 @@ class Mypdf extends TCPDF {
     // Left side, own data
 
     // Logo
-    $img = file_get_contents( FCPATH . 'images/logo.png');
+    $img = file_get_contents( FCPATH . 'images/logo.jpg');
 
     //$this->Image('@' . $img, $x=15.0, $y=15.0, $w=200.0, $h=200.0, $type="jpg", $dpi=75, $resize=false, $hidden=false );
-    $this->Image('@' . $img, $x=15.0, $y=15.0, $type="png", $w=40.0, $dpi=75, $resize=false, $hidden=false );
-
+    //$this->Image('@' . $img, $x=15.0, $y=15.0, $type="png", $w=40.0, $dpi=75, $resize=false, $hidden=false );
+    $this->Image(FCPATH . 'images/logo.jpg', 15.0, 15.0, 40.0, 40.0 );
 
 
 
@@ -106,6 +106,9 @@ class Mypdf extends TCPDF {
 
     $this->Cell(100, 10, '', 0, 0, 'L', false, '', 0, false, 'C', 'C');
     //$this->Cell(20, 15, 'Rcpt', 0, 0, 'L', false, '', 0, false, 'C', 'C');
+    $this->setY(20);
+    $this->setX(120);
+
     $this->Cell(0, 10, $this->invoice->rcpt_orga, 0, 2, 'L', false, '', 0, false, 'C', 'C');
 
     if ($this->invoice->rcpt_contact != '')
@@ -117,7 +120,7 @@ class Mypdf extends TCPDF {
       $this->Cell(0, 10, $this->invoice->rcpt_address2, 0, 2, 'L', false, '', 0, false, 'C', 'C');
 
     if ($this->invoice->rcpt_zip != '' || $this->invoice->rcpt_city != '')
-      $this->Cell(0, 10, $this->invoice->rcpt_zip . ' ' . $this->invoice->rcpt_city, 0, 1, 'L', false, '', 0, false, 'C', 'C');
+      $this->Cell(0, 10, $this->invoice->rcpt_zip . ' ' . $this->invoice->rcpt_city, 0, 2, 'L', false, '', 0, false, 'C', 'C');
 
     if ($this->invoice->rcpt_country != '' && $this->invoice->rcpt_country != 'Belgien')
       $this->Cell(0, 10, $this->invoice->rcpt_country, 0, 1, 'L', false, '', 0, false, 'C', 'C');
@@ -125,6 +128,8 @@ class Mypdf extends TCPDF {
       $this->Cell(0, 10, '', 0, 1, 'L', false, '', 0, false, 'C', 'C');
 
     $this->Cell(0, 2, '', 0, 1, 'L', false, '', 0, false, 'C', 'C');
+
+    $this->setY( $this->getY() + 50 );
 
     $this->Cell(0, 10, 'Rechnung', 0, 1, 'C', false, '', 0, false, 'C', 'C');
 
@@ -161,13 +166,16 @@ class Mypdf extends TCPDF {
       //$this->Cell(0, 1, '', 'B', 1, 'L', false, '', 0, false, 'C', 'C');
       $item_index++;
 
-      if ( (($firstPage && $item_index > 6) || ($item_index - 6) % 12 == 11 ) && $item_index < $item_count) {
+      //if ( (($firstPage && $item_index > 6) || ($item_index - 6) % 12 == 11 ) && $item_index < $item_count) {
+      if ( ($firstPage && $this->getY() >= 240 && $item_index < $item_count) || (!$firstPage && $this->getY() >= 250 && $item_index < $item_count)) {
         $firstPage = false;
         $this->Cell(0,15,
           "Zwischentotal (Fortsetzung auf der nächsten Seite): EUR " . number_format($total_price, 2, ',' , '.') ,
           0, 1, 'R', false, '', 0, true, 'C', 'C');
 
         $this->AddPage();
+
+
 
         $this->Cell(0,30, '', 0,1);
 
@@ -178,6 +186,13 @@ class Mypdf extends TCPDF {
         $this->Cell(0,15,
           "Übertrag von vorheriger Seite: EUR " . number_format($total_price, 2, ',' , '.') ,
           0, 1, 'R', false, '', 0, true, 'C', 'C');
+
+          // Kopf
+          $this->Cell(20, 10, 'Position', 0, 0, 'L', false, '', 0, false, 'C', 'C');
+          $this->Cell(90, 10, 'Beschreibung', 0, 0, 'L', false, '', 0, false, 'C', 'C');
+          $this->Cell(20, 10, 'Anz.', 0, 0, 'L', false, '', 0, false, 'C', 'C');
+          $this->Cell(30, 10, 'Stückpreis', 0, 0, 'L', false, '', 0, false, 'C', 'C');
+          $this->Cell(20, 10, 'Total', 0, 1, 'L', false, '', 0, false, 'C', 'C');
 
       }
     }

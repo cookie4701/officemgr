@@ -152,37 +152,37 @@
                 ?>
                 <tr id="R<?= $item->position ?>">
           			<td class="row-index">
-                  <input type="hidden" value="<?= $item->id ?>" name="item_id[]"/>
+                  <input type="hidden" value="<?= $item->id ?>" name="row[<?= $item->position ?>][item_id]"/>
           				<div class="form-group">
-                  <input type="text" name="pos[]" class="form-control" disabled size="3" value="<?= $item->position ?>" />
+                  <input type="text" name="row[<?= $item->position ?>][pos]" class="form-control" disabled size="3" value="<?= $item->position ?>" />
           				</div>
 
           			</td>
 
           			<td class="label">
           			<div class="form-group">
-          			<input type="text" class="form-control" name="label[]" value="<?= $item->label ?>" />
+          			<input type="text" class="form-control" name="row[<?= $item->position ?>][label]" value="<?= $item->label ?>" />
           			<span class="text-danger"> <?= isset($validation) ? display_error($validation, 'label') : '' ?></span>
           			</div>
           			</td>
 
           			<td class="item-amount">
           			<div class="form-group">
-          			<input type="text" class="form-control" name="item_amount[]" value="<?= $item->amount ?>" />
+          			<input type="text" class="form-control" name="row[<?= $item->position ?>][item_amount]" value="<?= $item->amount ?>" />
           			<span class="text-danger"> <?= isset($validation) ? display_error($validation, 'item_amount') : '' ?></span>
           			</div>
           			</td>
 
           			<td class="unit-price">
           			<div class="form-group">
-          			<input type="text" class="form-control" name="unit_price[]" value="<?= $item->unit_price ?>" />
+          			<input type="text" class="form-control" name="row[<?= $item->position ?>][unit_price]" value="<?= $item->unit_price ?>" />
           			<span class="text-danger"> <?= isset($validation) ? display_error($validation, 'unit_price') : '' ?></span>
           			</div>
           			</td>
 
           			<td class="item-total">
           			<div class="form-group">
-          			<input class="form-control" size="6" name="subtotal[]" disabled />
+          			<input class="form-control" size="6" name="row[<?= $item->position ?>][subtotal]" disabled />
           			</div>
           			</td>
 

@@ -20,34 +20,34 @@ $(document).ready(function() {
     $('#posbody').append(`<tr id="R${++rowIdx}">
     <td class="row-index">
       <div class="form-group">
-      <input type="text" name="pos[]" class="form-control" disabled size="3" value="${rowIdx}" />
+      <input type="text" name="row[${rowIdx}][pos]" class="form-control" disabled size="3" value="${rowIdx}" />
       </div>
 
     </td>
 
     <td class="label">
     <div class="form-group">
-    <input type="text" class="form-control" name="label[]" />
+    <input type="text" class="form-control" name="row[${rowIdx}][label]" />
 
     </div>
     </td>
 
     <td class="item-amount">
     <div class="form-group">
-    <input type="text" class="form-control" name="item_amount[]"  />
+    <input type="text" class="form-control" name="row[${rowIdx}][item_amount]"  />
     </div>
     </td>
 
     <td class="unit-price">
     <div class="form-group">
-    <input type="text" class="form-control" name="unit_price[]" " />
+    <input type="text" class="form-control" name="row[${rowIdx}][unit_price]" " />
 
     </div>
     </td>
 
     <td class="item-total">
     <div class="form-group">
-    <input class="form-control" size="6" name="subtotal[]" disabled />
+    <input class="form-control" size="6" name="row[${rowIdx}][subtotal]" disabled />
     </div>
     </td>
 
